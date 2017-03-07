@@ -4,34 +4,52 @@
 <meta charset="utf-8">
 <title>Bookish</title>
 
+<style>
+#field
+{
+    width:150px;
+}
+</style>
+
 <svg id="canvas">
     <svg id="topbar_svg"><rect id="topbar"></rect></svg>
     <svg id="button_BL"></svg>
     <svg id="button_BR"></svg>
-    <foreignObject id="text_box">
-        <br>
-        <p>Please enter details about the book.</p>
-    </foreignObject>
     <foreignObject id="form_field">
         <center>
-            <form action="buy_info_confirm.html" method="GET">
+            <form action="new_listing_confirm.html" method="GET">
+                <h2>Book Info</h2>
                 Title*:<br>
-                <input type="text" name="title" required /><br>
+                <input id="field" type="text" name="title" value="Introduction to Psychology" required /><br>
                 <br>
                 Author*:<br>
-                <input type="text" name="author" required /><br>
+                <input id="field" type="text" name="author" value="James W. Kalat" required /><br>
                 <br>
                 Edition*:<br>
-                <input type="text" name="edition" required /><br>
+                <input id="field" type="text" name="edition" value="11th" required /><br>
                 <br>
                 Condition*:<br>
-                <select name="condition" required />
+                <select id="field" name="condition" required />
                     <option value="">---SELECT---</option>
-                    <option value="no_pref">No Preference</option>
-                    <option value="light">Lightly Used</option>
+                    <option value="light" selected>Lightly Used</option>
                     <option value="heavy">Heavily Used</option>
                     <option value="damage">Damaged</option>
                 </select>
+                <br>
+                <h2>Additional Info</h2>
+                Selling Price*: 
+                $<input type="number" min="0.01" step="0.01" max="500" name="price" value="12.34" required /><br>
+                <br>
+                Payment*:
+                <select name="pay_opt" required />
+                    <option value="">---SELECT---</option>
+                    <option value="no_pref">No Preference</option>
+                    <option value="venmo">Venmo Only</option>
+                    <option value="cash">Cash Only</option>
+                </select>
+                <br>
+                <br>
+                <input type="checkbox" name="other_unis">Available to students from other universities
                 <br>
                 <br>
                 <label>
@@ -41,22 +59,22 @@
             </form>
         </center>
     </foreignObject>
-    <!-- <svg id="button_C"></svg>  -->
+    <svg id="button_C"></svg> 
     <svg><rect id="botbar"></rect></svg>
     <svg id="button_TL"></svg>
     <svg id="button_TC"></svg> 
     <svg id="button_TR"></svg> 
 </svg>
 
-<script src="js/d3.v4.min.js"></script>
-<script lang="javascript" src="js/jquery-3.1.0.min.js"></script>
+<script src="../js/d3.v4.min.js"></script>
+<script lang="javascript" src="../js/jquery-3.1.0.min.js"></script>
 
 <body>
     <script>
 
         /////////////// Navigation Variables //////////////
-        var prev_screen  = "market.html";
-        //var next_screen  = "buy_info_confirm.html";
+        var prev_screen  = "sell_search_result.html";
+        //var next_screen  = "new_listing_confirm.html";
         var tab_L        = "listings.html";
         var tab_C        = "market.html";
         var tab_R        = "trades.html";
@@ -99,10 +117,10 @@
         ///////////////////////////////////////////////////
 
         //////////////// String Variables /////////////////
-        var header_text  = "Book Info";
-        var BB_L_text    = "Back";
+        var header_text  = "New listing";
+        var BB_L_text    = "Cancel";
         var BB_R_text    = "Next";
-        var CB_text      = "Submit";
+        var CB_text      = "Next";
         var TB_L_text    = "Posts";
         var TB_C_text    = "Market";
         var TB_R_text    = "Trades";
@@ -310,7 +328,7 @@
 
         ////////////// centered entry form ////////////////
         var form = d3.select("#form_field")
-                    .attr('y', 2.5 * bar_height)
+                    .attr('y', bar_height)
                     .attr('width',  dimensions[0]);
         ///////////////////////////////////////////////////
 

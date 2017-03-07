@@ -1,0 +1,97 @@
+<!DOCTYPE html><!doctype html>
+
+<html lang="en">
+<meta charset="utf-8">
+<title>Oops!</title>
+
+<svg id="canvas">
+    <svg id="topbar_svg"><rect id="topbar"></rect></svg>
+    <foreignObject id="text_box">
+        <br>
+        <h2>Wrong turn!</h2>
+        <p>It seems that this action is not supposed to happen during this scenario.</p> 
+        <p>Please go back and try again!</p>
+    </foreignObject>
+    <svg><rect id="botbar"></rect></svg>
+</svg>
+
+<script src="../js/d3.v4.min.js"></script>
+<script lang="javascript" src="../js/jquery-3.1.0.min.js"></script>
+
+<body>
+    <script>
+        /////////////// Navigation Variables //////////////
+        ///////////////////////////////////////////////////
+
+        ///////// Position and Dimension Variables ////////
+        var scale        = 0.5;
+        var dimensions   = [750 * scale, 1334 * scale];
+        var bar_height   = dimensions[1] / 10;
+        var side_margin  = dimensions[0] / 10;
+
+        // text box dimensions
+        var box_width    = dimensions[0] - 2 * side_margin;
+        var box_y_pos    = bar_height;
+        var box_x_pos    = side_margin; 
+        ///////////////////////////////////////////////////
+
+        //////////////// String Variables /////////////////
+        var header_text  = "Oops!";
+        ///////////////////////////////////////////////////
+
+        ///////////////// Style Variables /////////////////
+        // colors
+        var BG_color     = '#e6e6fa';
+        var bar_color    = '#a6a6ed';
+        var button_color = '#4343d9';
+        var B_font_color = 'white';
+        var B_line_color = 'white';
+        var h_font_color = 'black';
+        // font sizes
+        var B_font_size  = 20;
+        var h_font_size  = 30;
+        ///////////////////////////////////////////////////
+
+        //////////////////// BG layer /////////////////////
+        var canvas = d3.select("#canvas")
+            .attr('width',  dimensions[0])
+            .attr('height', dimensions[1])
+            .style('background-color', BG_color); 
+        ///////////////////////////////////////////////////
+
+        //////////////// top bar w/ header ////////////////
+        var topbar = d3.select("#topbar")
+            .attr('width',  dimensions[0])
+            .attr('height', bar_height)
+            .style('fill',  bar_color);
+        var topbar_svg = d3.select("#topbar_svg")
+            .attr('width',  dimensions[0])
+            .attr('height', bar_height);
+        topbar_svg.append("text")
+                .attr('x', dimensions[0]  / 2)
+                .attr('y', bar_height / 2)
+                .text(header_text)
+                .attr('text-anchor', 'middle')
+                .attr('alignment-baseline', 'central')
+                .attr('fill',      h_font_color)
+                .attr('font-size', h_font_size);
+        ///////////////////////////////////////////////////
+
+        //////////////////// text box /////////////////////
+        var box = d3.select("#text_box")
+                    .attr('x',      box_x_pos)
+                    .attr('y',      box_y_pos)
+                    .attr('width',  box_width);
+        ///////////////////////////////////////////////////
+
+        ///////////////////// bot bar /////////////////////
+        var botbar = d3.select("#botbar")
+            .attr('y',      dimensions[1] - bar_height)
+            .attr('width',  dimensions[0])
+            .attr('height', bar_height)
+            .style('fill',  bar_color);
+        ///////////////////////////////////////////////////
+
+    </script>
+</body>
+</html>

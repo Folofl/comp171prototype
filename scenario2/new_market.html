@@ -20,8 +20,8 @@
     <svg id="button_TR"></svg> 
 </svg>
 
-<script src="js/d3.v4.min.js"></script>
-<script lang="javascript" src="js/jquery-3.1.0.min.js"></script>
+<script src="../js/d3.v4.min.js"></script>
+<script lang="javascript" src="../js/jquery-3.1.0.min.js"></script>
 
 <body>
     <script>
@@ -29,9 +29,9 @@
         /////////////// Navigation Variables //////////////
         var next_screen1 = "buy_bookinfo.html";
         var next_screen2 = "sell_bookinfo.html";
-        var tab_L        = "listings.html";
-        var tab_C        = "market.html";
-        var tab_R        = "trades.html";
+        var tab_L        = "new_listings.html";
+        var tab_C        = "new_market.html";
+        var tab_R        = "new_trades.html";
         ///////////////////////////////////////////////////
 
         ///////// Position and Dimension Variables ////////
@@ -50,11 +50,11 @@
 
         // centered button (CB) dimensions
         var CB_width     = dimensions[0] - 2 * side_margin;
-        var CB_height    = bar_height;
+        var CB_height    = bar_height * 2;
         // centered button (CB) dimensions
-        var CB_y_pos_T   = dimensions[1] - 6   * CB_height;
-        var CB_y_pos_C   = dimensions[1] - 4.5 * CB_height;
-        var CB_y_pos_B   = dimensions[1] - 3   * CB_height;
+        var CB_y_pos_T   = dimensions[1] - 3.5 * CB_height;
+        var CB_y_pos_C   = dimensions[1] - 2.0 * CB_height;
+        // var CB_y_pos_B   = dimensions[1] - 3   * CB_height;
         var CB_x_pos     = side_margin;
 
         // tab button (TB) dimensions

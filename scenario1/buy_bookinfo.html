@@ -1,0 +1,327 @@
+<!DOCTYPE html><!doctype html>
+
+<html lang="en">
+<meta charset="utf-8">
+<title>Bookish</title>
+
+<style>
+#field
+{
+    width:150px;
+}
+</style>
+
+<svg id="canvas">
+    <svg id="topbar_svg"><rect id="topbar"></rect></svg>
+    <svg id="button_BL"></svg>
+    <svg id="button_BR"></svg>
+    <foreignObject id="text_box">
+        <br>
+        <h2>I am looking to buy...</h2>
+        <p>Please enter details about the book.</p>
+    </foreignObject>
+    <foreignObject id="form_field">
+        <center>
+            <form action="buy_info_confirm.html" method="GET">
+                Title*:<br>
+                <input type="text" id="field" name="title" required /><br>
+                <br>
+                Author*:<br>
+                <input type="text" id="field" name="author" required /><br>
+                <br>
+                Edition*:<br>
+                <input type="text" id="field" name="edition" required /><br>
+                <br>
+                Condition*:<br>
+                <select id="field" name="condition" required />
+                    <option value="">---SELECT---</option>
+                    <option value="no_pref">No Preference</option>
+                    <option value="light">Lightly Used</option>
+                    <option value="heavy">Heavily Used</option>
+                    <option value="damage">Damaged</option>
+                </select>
+                <br>
+                <br>
+                <label>
+                    <input type="submit" style="display:none"/>
+                    <svg id="button_C"></svg>
+                </label>
+            </form>
+        </center>
+    </foreignObject>
+    <!-- <svg id="button_C"></svg>  -->
+    <svg><rect id="botbar"></rect></svg>
+    <svg id="button_TL"></svg>
+    <svg id="button_TC"></svg> 
+    <svg id="button_TR"></svg> 
+</svg>
+
+<script src="../js/d3.v4.min.js"></script>
+<script lang="javascript" src="../js/jquery-3.1.0.min.js"></script>
+
+<body>
+    <script>
+
+        /////////////// Navigation Variables //////////////
+        var prev_screen  = "market.html";
+        //var next_screen  = "buy_info_confirm.html";
+        var tab_L        = "listings.html";
+        var tab_C        = "market.html";
+        var tab_R        = "trades.html";
+        ///////////////////////////////////////////////////
+
+        ///////// Position and Dimension Variables ////////
+        var scale        = 0.5;
+        var dimensions   = [750 * scale, 1334 * scale];
+        var bar_height   = dimensions[1] /10;
+        var side_margin  = dimensions[0] / 10;
+
+        // bar button (BB) dimensions
+        var BB_width     = dimensions[0] / 4;
+        var BB_height    = bar_height;
+        // bar button (BB) positioning
+        var BB_y_pos     = 0;
+        var BB_x_pos_L   = 0;
+        var BB_x_pos_R   = dimensions[0] - BB_width;
+
+        // centered button (CB) dimensions
+        var CB_width     = dimensions[0] - 2 * side_margin;
+        var CB_height    = bar_height;
+        // centered button (CB) dimensions
+        var CB_y_pos     = dimensions[1] - 3 * CB_height;
+        var CB_x_pos     = side_margin;
+
+        // tab button (TB) dimensions
+        var TB_width     = dimensions[0] / 3;
+        var TB_height    = bar_height;
+        // tab button (TB) positioning
+        var TB_y_pos     = dimensions[1] - bar_height;
+        var TB_x_pos_L   = 0 * TB_width;
+        var TB_x_pos_C   = 1 * TB_width;
+        var TB_x_pos_R   = 2 * TB_width;
+
+        // text box dimensions
+        var box_width    = dimensions[0] - 2 * side_margin;
+        var box_y_pos    = bar_height;
+        var box_x_pos    = side_margin; 
+        ///////////////////////////////////////////////////
+
+        //////////////// String Variables /////////////////
+        var header_text  = "Book Info";
+        var BB_L_text    = "Back";
+        var BB_R_text    = "Next";
+        var CB_text      = "Submit";
+        var TB_L_text    = "Posts";
+        var TB_C_text    = "Market";
+        var TB_R_text    = "Trades";
+        ///////////////////////////////////////////////////
+
+        ///////////////// Style Variables /////////////////
+        // colors
+        var BG_color     = '#e6e6fa';
+        var bar_color    = '#a6a6ed';
+        var button_color = '#4343d9';
+        var B_font_color = 'white';
+        var B_line_color = 'white';
+        var h_font_color = 'black';
+        // font sizes
+        var B_font_size  = 20;
+        var h_font_size  = 30;
+        ///////////////////////////////////////////////////
+
+        //////////////////// BG layer /////////////////////
+        var canvas = d3.select("#canvas")
+            .attr('width',  dimensions[0])
+            .attr('height', dimensions[1])
+            .style('background-color', BG_color); 
+        ///////////////////////////////////////////////////
+
+        //////////////// top bar w/ header ////////////////
+        var topbar = d3.select("#topbar")
+            .attr('width',  dimensions[0])
+            .attr('height', bar_height)
+            .style('fill',  bar_color);
+        var topbar_svg = d3.select("#topbar_svg")
+            .attr('width',  dimensions[0])
+            .attr('height', bar_height);
+        topbar_svg.append("text")
+                .attr('x', dimensions[0]  / 2)
+                .attr('y', bar_height / 2)
+                .text(header_text)
+                .attr('text-anchor', 'middle')
+                .attr('alignment-baseline', 'central')
+                .attr('fill',      h_font_color)
+                .attr('font-size', h_font_size);
+        ///////////////////////////////////////////////////
+
+        //////////////////// text box /////////////////////
+        var box = d3.select("#text_box")
+                    .attr('x',      box_x_pos)
+                    .attr('y',      box_y_pos)
+                    .attr('width',  box_width);
+        ///////////////////////////////////////////////////
+
+        ///////////////////// bot bar /////////////////////
+        var botbar = d3.select("#botbar")
+            .attr('y',      dimensions[1] - bar_height)
+            .attr('width',  dimensions[0])
+            .attr('height', bar_height)
+            .style('fill',  bar_color);
+        ///////////////////////////////////////////////////
+
+        ////////////// top left bar button ////////////////
+        var button_BL = d3.select("#button_BL")
+            .attr('x',      BB_x_pos_L)
+            .attr('width',  BB_width)
+            .attr('height', BB_height)
+            .on  ('click', function () {
+                   // This loads a new html page
+                   window.location.href = prev_screen;
+            });
+        button_BL.append("rect")
+                 .attr('height', BB_height)
+                 .attr('width',  BB_width)
+                 .attr('fill', button_color);
+        button_BL.append("text")
+                 .attr('x', BB_width  / 2)
+                 .attr('y', BB_height / 2)
+                 .text(BB_L_text)
+                 .attr('text-anchor', 'middle')
+                 .attr('alignment-baseline', 'central')
+                 .attr('fill',      B_font_color)
+                 .attr('font-size', B_font_size);
+        ///////////////////////////////////////////////////
+
+        ////////////// top right bar button ///////////////
+        // var button_BR = d3.select("#button_BR")
+        //     .attr('x',      BB_x_pos_R)
+        //     .attr('width',  BB_width)
+        //     .attr('height', BB_height)
+        //     .on  ('click', function () {
+        //            // This loads a new html page
+        //            window.location.href = next_screen;
+        //     });
+        // button_BR.append("rect")
+        //          .attr('height', BB_height)
+        //          .attr('width',  BB_width)
+        //          .attr('fill', button_color);
+        // button_BR.append("text")
+        //          .attr('x', BB_width  / 2)
+        //          .attr('y', BB_height / 2)
+        //          .text(BB_R_text)
+        //          .attr('text-anchor', 'middle')
+        //          .attr('alignment-baseline', 'central')
+        //          .attr('fill',      B_font_color)
+        //          .attr('font-size', B_font_size);
+        ///////////////////////////////////////////////////
+
+        ////////////// wide centered button ///////////////
+        var button_C = d3.select("#button_C")
+                         .attr('x',      CB_x_pos)
+                         .attr('y',      CB_y_pos)
+                         .attr('width',  CB_width)
+                         .attr('height', CB_height)
+                         .on  ('click', function () {
+                               window.location.href = next_screen;
+                         });
+        button_C.append("rect")
+                .attr('height', CB_height)
+                .attr('width',  CB_width)
+                .attr('fill', button_color);
+        button_C.append("text")
+                .attr('x', CB_width  / 2)
+                .attr('y', CB_height / 2)
+                .text(CB_text)
+                .attr('text-anchor', 'middle')
+                .attr('alignment-baseline', 'central')
+                .attr('fill',      B_font_color)
+                .attr('font-size', B_font_size);
+        ///////////////////////////////////////////////////
+
+        ////////////// bot left tab button ////////////////
+        // var button_TL = d3.select("#button_TL")
+        //     .attr('x',      TB_x_pos_L)
+        //     .attr('y',      TB_y_pos)
+        //     .attr('width',  TB_width)
+        //     .attr('height', TB_height)
+        //     .on  ('click', function () {
+        //            // This loads a new html page
+        //            window.location.href = tab_L;
+        //     });
+        // button_TL.append("rect")
+        //          .attr('height', TB_height)
+        //          .attr('width',  TB_width)
+        //          .attr('stroke', B_line_color)
+        //          .attr('stroke-width', 1)
+        //          .attr('fill', button_color);
+        // button_TL.append("text")
+        //          .attr('x', TB_width  / 2)
+        //          .attr('y', TB_height / 2)
+        //          .text(TB_L_text)
+        //          .attr('text-anchor', 'middle')
+        //          .attr('alignment-baseline', 'central')
+        //          .attr('fill',      B_font_color)
+        //          .attr('font-size', B_font_size);
+        ///////////////////////////////////////////////////
+
+        ///////////// bot middle tab button ///////////////
+        // var button_TC = d3.select("#button_TC")
+        //     .attr('x',      TB_x_pos_C)
+        //     .attr('y',      TB_y_pos)
+        //     .attr('width',  TB_width)
+        //     .attr('height', TB_height)
+        //     .on  ('click', function () {
+        //            // This loads a new html page
+        //            window.location.href = tab_C;
+        //     });
+        // button_TC.append("rect")
+        //          .attr('height', TB_height)
+        //          .attr('width',  TB_width)
+        //          .attr('stroke', B_line_color)
+        //          .attr('stroke-width', 1)
+        //          .attr('fill', button_color);
+        // button_TC.append("text")
+        //          .attr('x', TB_width  / 2)
+        //          .attr('y', TB_height / 2)
+        //          .text(TB_C_text)
+        //          .attr('text-anchor', 'middle')
+        //          .attr('alignment-baseline', 'central')
+        //          .attr('fill',      B_font_color)
+        //          .attr('font-size', B_font_size);
+        ///////////////////////////////////////////////////
+
+        ////////////// bot right tab button ///////////////
+        // var button_TR = d3.select("#button_TR")
+        //     .attr('x',      TB_x_pos_R)
+        //     .attr('y',      TB_y_pos)
+        //     .attr('width',  TB_width)
+        //     .attr('height', TB_height)
+        //     .on  ('click', function () {
+        //            // This loads a new html page
+        //            window.location.href = tab_R;
+        //     });
+        // button_TR.append("rect")
+        //          .attr('height', TB_height)
+        //          .attr('width',  TB_width)
+        //          .attr('stroke', B_line_color)
+        //          .attr('stroke-width', 1)
+        //          .attr('fill', button_color);
+        // button_TR.append("text")
+        //          .attr('x', TB_width  / 2)
+        //          .attr('y', TB_height / 2)
+        //          .text(TB_R_text)
+        //          .attr('text-anchor', 'middle')
+        //          .attr('alignment-baseline', 'central')
+        //          .attr('fill',      B_font_color)
+        //          .attr('font-size', B_font_size);
+        ///////////////////////////////////////////////////
+
+        ////////////// centered entry form ////////////////
+        var form = d3.select("#form_field")
+                    .attr('y', 3 * bar_height)
+                    .attr('width',  dimensions[0]);
+        ///////////////////////////////////////////////////
+
+    </script>
+</body>
+</html>

@@ -7,13 +7,12 @@
 <svg id="canvas">
     <svg id="topbar_svg"><rect id="topbar"></rect></svg>
     <svg id="button_BL"></svg>
-    <svg id="button_BR"></svg> 
+    <svg id="button_BR"></svg>
+    <svg id="button_SL"></svg>
+    <svg id="button_SR"></svg>
     <foreignObject id="text_box">
         <br>
-        <h2>Active:</h2>
-        <p id="a_trades">    None</p>
-        <h2>Completed:</h2>
-        <p id="c_trades">    None</p>
+        <p id="post">No requests yet</p>
     </foreignObject>
     <svg id="button_C1"></svg>
     <svg id="button_C2"></svg>  
@@ -23,18 +22,18 @@
     <svg id="button_TR"></svg> 
 </svg>
 
-<script src="js/d3.v4.min.js"></script>
-<script lang="javascript" src="js/jquery-3.1.0.min.js"></script>
+<script src="../js/d3.v4.min.js"></script>
+<script lang="javascript" src="../js/jquery-3.1.0.min.js"></script>
 
 <body>
     <script>
 
         /////////////// Navigation Variables //////////////
-        var next_screen1 = "buy.html";
-        var next_screen2 = "sell.html";
-        var tab_L        = "listings.html";
-        var tab_C        = "market.html";
-        var tab_R        = "trades.html";
+        var SB_L         = "new_listings.html";
+        var SB_R         = "new_requests.html";
+        var tab_L        = "new_listings.html";
+        var tab_C        = "new_market.html";
+        var tab_R        = "new_trades.html";
         ///////////////////////////////////////////////////
 
         ///////// Position and Dimension Variables ////////
@@ -69,14 +68,22 @@
         var TB_x_pos_C   = 1 * TB_width;
         var TB_x_pos_R   = 2 * TB_width;
 
+        // switch button (SB) dimensions
+        var SB_width     = (dimensions[0] - 2 * side_margin) / 2;
+        var SB_height    = 0.5 * bar_height;
+        // switch button (SB) positioning
+        var SB_y_pos     = 1.5 * bar_height;
+        var SB_x_pos_L   = side_margin;
+        var SB_x_pos_R   = side_margin + SB_width;
+
         // text box dimensions
         var box_width    = dimensions[0] - 2 * side_margin;
-        var box_y_pos    = bar_height;
+        var box_y_pos    = 2 * bar_height;
         var box_x_pos    = side_margin; 
         ///////////////////////////////////////////////////
 
         //////////////// String Variables /////////////////
-        var header_text  = "Trades";
+        var header_text  = "Posts";
         var BB_L_text    = "Back";
         var BB_R_text    = "Next";
         var CB_text1     = "Buy Books";
@@ -84,6 +91,8 @@
         var TB_L_text    = "Posts";
         var TB_C_text    = "Market";
         var TB_R_text    = "Trades";
+        var SB_L_text    = "Listings";
+        var SB_R_text    = "Requests";
         ///////////////////////////////////////////////////
 
         ///////////////// Style Variables /////////////////
@@ -185,6 +194,56 @@
         //          .attr('font-size', B_font_size);
         ///////////////////////////////////////////////////
 
+        //////////////// left switch button ///////////////
+        var button_SL = d3.select("#button_SL")
+            .attr('x',      SB_x_pos_L)
+            .attr('y',      SB_y_pos)
+            .attr('width',  SB_width)
+            .attr('height', SB_height)
+            .on  ('click', function () {
+                   // This loads a new html page
+                   window.location.href = SB_L;
+            });
+        button_SL.append("rect")
+                 .attr('height', SB_height)
+                 .attr('width',  SB_width)
+                 .attr('fill', button_color);
+        button_SL.append("text")
+                 .attr('x', SB_width  / 2)
+                 .attr('y', SB_height / 2)
+                 .text(SB_L_text)
+                 .attr('text-anchor', 'middle')
+                 .attr('alignment-baseline', 'central')
+                 .attr('fill',      B_font_color)
+                 .attr('font-size', B_font_size);
+        ///////////////////////////////////////////////////
+
+        /////////////// right switch button ///////////////
+        var button_SR = d3.select("#button_SR")
+            .attr('x',      SB_x_pos_R)
+            .attr('y',      SB_y_pos)
+            .attr('width',  SB_width)
+            .attr('height', SB_height)
+            .on  ('click', function () {
+                   // This loads a new html page
+                   window.location.href = SB_R;
+            });
+        button_SR.append("rect")
+                 .attr('height', SB_height)
+                 .attr('width',  SB_width)
+                 .attr('stroke', button_color)
+                 .attr('stroke-width', 2)
+                 .attr('fill', B_font_color);
+        button_SR.append("text")
+                 .attr('x', SB_width  / 2)
+                 .attr('y', SB_height / 2)
+                 .text(SB_R_text)
+                 .attr('text-anchor', 'middle')
+                 .attr('alignment-baseline', 'central')
+                 .attr('fill',      button_color)
+                 .attr('font-size', B_font_size);
+        ///////////////////////////////////////////////////
+
         ////////////// wide centered button ///////////////
         // var button_C1 = d3.select("#button_C1")
         //                   .attr('x',      CB_x_pos)
@@ -244,16 +303,16 @@
         button_TL.append("rect")
                  .attr('height', TB_height)
                  .attr('width',  TB_width)
-                 .attr('stroke', B_line_color)
+                 .attr('stroke', button_color)
                  .attr('stroke-width', 1)
-                 .attr('fill', button_color);
+                 .attr('fill', B_font_color);
         button_TL.append("text")
                  .attr('x', TB_width  / 2)
                  .attr('y', TB_height / 2)
                  .text(TB_L_text)
                  .attr('text-anchor', 'middle')
                  .attr('alignment-baseline', 'central')
-                 .attr('fill',      B_font_color)
+                 .attr('fill',      button_color)
                  .attr('font-size', B_font_size);
         ///////////////////////////////////////////////////
 
@@ -296,16 +355,16 @@
         button_TR.append("rect")
                  .attr('height', TB_height)
                  .attr('width',  TB_width)
-                 .attr('stroke', button_color)
+                 .attr('stroke', B_line_color)
                  .attr('stroke-width', 1)
-                 .attr('fill', B_font_color);
+                 .attr('fill', button_color);
         button_TR.append("text")
                  .attr('x', TB_width  / 2)
                  .attr('y', TB_height / 2)
                  .text(TB_R_text)
                  .attr('text-anchor', 'middle')
                  .attr('alignment-baseline', 'central')
-                 .attr('fill',      button_color)
+                 .attr('fill',      B_font_color)
                  .attr('font-size', B_font_size);
         ///////////////////////////////////////////////////
 
