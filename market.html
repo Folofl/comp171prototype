@@ -10,10 +10,10 @@
     <svg id="button_BR"></svg> 
     <foreignObject id="text_box">
         <br>
-        <p>Here is the info you entered:</p>
-        <p id="uniname">(blank)</p>
+        <h2>I am looking to...</h2>
     </foreignObject>
-    <svg id="button_C"></svg> 
+    <svg id="button_C1"></svg>
+    <svg id="button_C2"></svg>  
     <svg><rect id="botbar"></rect></svg>
     <svg id="button_TL"></svg>
     <svg id="button_TC"></svg> 
@@ -27,8 +27,8 @@
     <script>
 
         /////////////// Navigation Variables //////////////
-        var prev_screen  = "screen2.html";
-        var next_screen  = "screen4.html";
+        var next_screen1 = "buy_bookinfo.html";
+        var next_screen2 = "sell_bookinfo.html";
         var tab_L        = "listings.html";
         var tab_C        = "market.html";
         var tab_R        = "trades.html";
@@ -52,7 +52,9 @@
         var CB_width     = dimensions[0] - 2 * side_margin;
         var CB_height    = bar_height;
         // centered button (CB) dimensions
-        var CB_y_pos     = dimensions[1] - 3 * CB_height;
+        var CB_y_pos_T   = dimensions[1] - 6   * CB_height;
+        var CB_y_pos_C   = dimensions[1] - 4.5 * CB_height;
+        var CB_y_pos_B   = dimensions[1] - 3   * CB_height;
         var CB_x_pos     = side_margin;
 
         // tab button (TB) dimensions
@@ -71,10 +73,11 @@
         ///////////////////////////////////////////////////
 
         //////////////// String Variables /////////////////
-        var header_text  = "Confirmation";
+        var header_text  = "Market";
         var BB_L_text    = "Back";
         var BB_R_text    = "Next";
-        var CB_text      = "Submit";
+        var CB_text1     = "Buy Books";
+        var CB_text2     = "Sell Books";
         var TB_L_text    = "Posts";
         var TB_C_text    = "Market";
         var TB_R_text    = "Trades";
@@ -134,26 +137,26 @@
         ///////////////////////////////////////////////////
 
         ////////////// top left bar button ////////////////
-        var button_BL = d3.select("#button_BL")
-            .attr('x',      BB_x_pos_L)
-            .attr('width',  BB_width)
-            .attr('height', BB_height)
-            .on  ('click', function () {
-                   // This loads a new html page
-                   window.location.href = prev_screen;
-            });
-        button_BL.append("rect")
-                 .attr('height', BB_height)
-                 .attr('width',  BB_width)
-                 .attr('fill', button_color);
-        button_BL.append("text")
-                 .attr('x', BB_width  / 2)
-                 .attr('y', BB_height / 2)
-                 .text(BB_L_text)
-                 .attr('text-anchor', 'middle')
-                 .attr('alignment-baseline', 'central')
-                 .attr('fill',      B_font_color)
-                 .attr('font-size', B_font_size);
+        // var button_BL = d3.select("#button_BL")
+        //     .attr('x',      BB_x_pos_L)
+        //     .attr('width',  BB_width)
+        //     .attr('height', BB_height)
+        //     .on  ('click', function () {
+        //            // This loads a new html page
+        //            window.location.href = prev_screen;
+        //     });
+        // button_BL.append("rect")
+        //          .attr('height', BB_height)
+        //          .attr('width',  BB_width)
+        //          .attr('fill', button_color);
+        // button_BL.append("text")
+        //          .attr('x', BB_width  / 2)
+        //          .attr('y', BB_height / 2)
+        //          .text(BB_L_text)
+        //          .attr('text-anchor', 'middle')
+        //          .attr('alignment-baseline', 'central')
+        //          .attr('fill',      B_font_color)
+        //          .attr('font-size', B_font_size);
         ///////////////////////////////////////////////////
 
         ////////////// top right bar button ///////////////
@@ -180,26 +183,49 @@
         ///////////////////////////////////////////////////
 
         ////////////// wide centered button ///////////////
-        // var button_C = d3.select("#button_C")
-        //                  .attr('x',      CB_x_pos)
-        //                  .attr('y',      CB_y_pos)
-        //                  .attr('width',  CB_width)
-        //                  .attr('height', CB_height)
-        //                  .on  ('click', function () {
-        //                        window.location.href = next_screen;
-        //                  });
-        // button_C.append("rect")
-        //         .attr('height', CB_height)
-        //         .attr('width',  CB_width)
-        //         .attr('fill', button_color);
-        // button_C.append("text")
-        //         .attr('x', CB_width  / 2)
-        //         .attr('y', CB_height / 2)
-        //         .text(CB_text)
-        //         .attr('text-anchor', 'middle')
-        //         .attr('alignment-baseline', 'central')
-        //         .attr('fill',      B_font_color)
-        //         .attr('font-size', B_font_size);
+        var button_C1 = d3.select("#button_C1")
+                          .attr('x',      CB_x_pos)
+                          .attr('y',      CB_y_pos_T)
+                          .attr('width',  CB_width)
+                          .attr('height', CB_height)
+                          .on  ('click', function () {
+                                window.location.href = next_screen1;
+                          });
+        button_C1.append("rect")
+                 .attr('height', CB_height)
+                 .attr('width',  CB_width)
+                 .attr('fill', button_color);
+        button_C1.append("text")
+                 .attr('x', CB_width  / 2)
+                 .attr('y', CB_height / 2)
+                 .text(CB_text1)
+                 .attr('text-anchor', 'middle')
+                 .attr('alignment-baseline', 'central')
+                 .attr('fill',      B_font_color)
+                 .attr('font-size', B_font_size);
+        ///////////////////////////////////////////////////
+
+        ////////////// wide centered button ///////////////
+        var button_C2 = d3.select("#button_C2")
+                          .attr('x',      CB_x_pos)
+                          .attr('y',      CB_y_pos_C)
+                          .attr('width',  CB_width)
+                          .attr('height', CB_height)
+                          .on  ('click', function () {
+                                window.location.href = next_screen2;
+                          });
+        button_C2.append("rect")
+                 .attr('height', CB_height)
+                 .attr('width',  CB_width)
+                 .attr('fill', button_color);
+        button_C2.append("text")
+                 .attr('x', CB_width  / 2)
+                 .attr('y', CB_height / 2)
+                 .text(CB_text2)
+                 .attr('text-anchor', 'middle')
+                 .attr('alignment-baseline', 'central')
+                 .attr('fill',      B_font_color)
+                 .attr('font-size', B_font_size);
         ///////////////////////////////////////////////////
 
         ////////////// bot left tab button ////////////////
@@ -241,16 +267,16 @@
         button_TC.append("rect")
                  .attr('height', TB_height)
                  .attr('width',  TB_width)
-                 .attr('stroke', B_line_color)
+                 .attr('stroke', button_color)
                  .attr('stroke-width', 1)
-                 .attr('fill', button_color);
+                 .attr('fill', B_font_color);
         button_TC.append("text")
                  .attr('x', TB_width  / 2)
                  .attr('y', TB_height / 2)
                  .text(TB_C_text)
                  .attr('text-anchor', 'middle')
                  .attr('alignment-baseline', 'central')
-                 .attr('fill',      B_font_color)
+                 .attr('fill',      button_color)
                  .attr('font-size', B_font_size);
         ///////////////////////////////////////////////////
 
@@ -279,11 +305,6 @@
                  .attr('fill',      B_font_color)
                  .attr('font-size', B_font_size);
         ///////////////////////////////////////////////////
-
-        var uniname = window.location.search;
-        uniname = uniname.slice(5);
-        uniname = uniname.replace("+", " ");
-        $("p#uniname").text(uniname); 
 
     </script>
 </body>

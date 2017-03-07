@@ -10,13 +10,29 @@
     <svg id="button_BR"></svg>
     <foreignObject id="text_box">
         <br>
-        <p>I'm currently a student at...</p>
+        <p>Please enter details about the book.</p>
     </foreignObject>
     <foreignObject id="form_field">
         <center>
-            <form action="screen3.html" method="GET">
-                University name:<br>
-                <input type="text" name="uni"><br>
+            <form action="buy_info_confirm.html" method="GET">
+                Title*:<br>
+                <input type="text" name="title" required /><br>
+                <br>
+                Author*:<br>
+                <input type="text" name="author" required /><br>
+                <br>
+                Edition*:<br>
+                <input type="text" name="edition" required /><br>
+                <br>
+                Condition*:<br>
+                <select name="condition" required />
+                    <option value="">---SELECT---</option>
+                    <option value="no_pref">No Preference</option>
+                    <option value="light">Lightly Used</option>
+                    <option value="heavy">Heavily Used</option>
+                    <option value="damage">Damaged</option>
+                </select>
+                <br>
                 <br>
                 <label>
                     <input type="submit" style="display:none"/>
@@ -39,8 +55,8 @@
     <script>
 
         /////////////// Navigation Variables //////////////
-        var prev_screen  = "screen1.html";
-        var next_screen  = "screen3.html";
+        var prev_screen  = "market.html";
+        //var next_screen  = "buy_info_confirm.html";
         var tab_L        = "listings.html";
         var tab_C        = "market.html";
         var tab_R        = "trades.html";
@@ -83,7 +99,7 @@
         ///////////////////////////////////////////////////
 
         //////////////// String Variables /////////////////
-        var header_text  = "Location";
+        var header_text  = "Book Info";
         var BB_L_text    = "Back";
         var BB_R_text    = "Next";
         var CB_text      = "Submit";
@@ -294,7 +310,7 @@
 
         ////////////// centered entry form ////////////////
         var form = d3.select("#form_field")
-                    .attr('y', 4 * bar_height)
+                    .attr('y', 2.5 * bar_height)
                     .attr('width',  dimensions[0]);
         ///////////////////////////////////////////////////
 
