@@ -101,7 +101,7 @@
         ///////////////////////////////////////////////////
 
         //////////////// String Variables /////////////////
-        var header_text  = "Trades";
+        var header_text  = "My Trades";
         var BB_L_text    = "Back";
         var BB_R_text    = "Next";
         var CB_text1     = "Buy Books";
@@ -251,8 +251,10 @@
                  .attr('x', LB_x_pos_L)
                  .attr('y', LB_y_pos)
                  .attr('height', LB_height)
-                 .attr('width',  LB_width);
-
+                 .attr('width',  LB_width)
+                 .on  ('click', function () {
+                                window.location.href = "oops.html";
+                 });
         LB_L.append("rect")
                  .attr('height', LB_height)
                  .attr('width',  LB_width)
@@ -269,7 +271,10 @@
                  .attr('x', LB_x_pos_R)
                  .attr('y', LB_y_pos)
                  .attr('height', LB_height)
-                 .attr('width',  LB_width);         
+                 .attr('width',  LB_width)
+                 .on  ('click', function () {
+                                window.location.href = "oops.html";
+                 });         
         LB_R.append("rect")
                  .attr('height', LB_height)
                  .attr('width',  LB_width)

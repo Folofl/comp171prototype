@@ -32,7 +32,7 @@
         /////////////// Navigation Variables //////////////
         var prev_screen  = "buy_bookinfo.html";
         var next_screen1 = "buy_other_result.html";
-        var next_screen2 = "new_request.html";
+        var next_screen2 = "oops.html";
         var tab_L        = "listings.html";
         var tab_C        = "market.html";
         var tab_R        = "trades.html";
@@ -251,8 +251,10 @@
                  .attr('x', LB_x_pos)
                  .attr('y', LB_y_pos)
                  .attr('height', LB_height)
-                 .attr('width',  LB_width);
-
+                 .attr('width',  LB_width)
+                 .on  ('click', function () {
+                                window.location.href = "oops.html";
+                 });
         LB.append("rect")
                  .attr('height', LB_height)
                  .attr('width',  LB_width)
