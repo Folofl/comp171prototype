@@ -308,6 +308,8 @@
         else if (condition == "damage")
             condition = "Damaged";
 
+        if (edition == '')
+            edition = "No Preference";
 
         $("p#title").text("Title: " + title); 
         $("p#author").text("Author: " + author); 
