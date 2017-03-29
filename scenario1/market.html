@@ -15,7 +15,8 @@
         <h2>I am looking to...</h2>
     </foreignObject>
     <svg id="button_C1"></svg>
-    <svg id="button_C2"></svg>  
+    <svg id="button_C2"></svg>
+    <svg id="button_C3"></svg>   
     <svg><rect id="botbar"></rect></svg>
     <svg id="button_TL"></svg>
     <svg id="button_TC"></svg> 
@@ -29,8 +30,9 @@
     <script>
 
         /////////////// Navigation Variables //////////////
-        var next_screen1 = "buy_bookinfo.html";
-        var next_screen2 = "sell_bookinfo.html";
+        var next_screen1 = "browse_sc1.html";
+        var next_screen2 = "buy_bookinfo.html";
+        var next_screen3 = "sell_bookinfo.html";
         var tab_L        = "listings.html";
         var tab_C        = "market.html";
         var tab_R        = "trades.html";
@@ -52,11 +54,11 @@
 
         // centered button (CB) dimensions
         var CB_width     = dimensions[0] - 2 * side_margin;
-        var CB_height    = bar_height * 2;
+        var CB_height    = bar_height * 1.5;
         // centered button (CB) dimensions
-        var CB_y_pos_T   = dimensions[1] - 3.5 * CB_height;
-        var CB_y_pos_C   = dimensions[1] - 2.0 * CB_height;
-        // var CB_y_pos_B   = dimensions[1] - 3   * CB_height;
+        var CB_y_pos_T   = dimensions[1] - 5   * CB_height;
+        var CB_y_pos_C   = dimensions[1] - 3.5 * CB_height;
+        var CB_y_pos_B   = dimensions[1] - 2   * CB_height;
         var CB_x_pos     = side_margin;
 
         // tab button (TB) dimensions
@@ -78,11 +80,12 @@
         var header_text  = "Market";
         var BB_L_text    = "Back";
         var BB_R_text    = "Next";
-        var CB_text1     = "Buy Books";
-        var CB_text2     = "Sell Books";
-        var TB_L_text    = "Posts";
+        var CB_text1     = "Browse Posts";
+        var CB_text2     = "Buy Books";
+        var CB_text3     = "Sell Books";
+        var TB_L_text    = "My Posts";
         var TB_C_text    = "Market";
-        var TB_R_text    = "Trades";
+        var TB_R_text    = "My Trades";
         ///////////////////////////////////////////////////
 
         ///////////////// Style Variables /////////////////
@@ -224,6 +227,29 @@
                  .attr('x', CB_width  / 2)
                  .attr('y', CB_height / 2)
                  .text(CB_text2)
+                 .attr('text-anchor', 'middle')
+                 .attr('alignment-baseline', 'central')
+                 .attr('fill',      B_font_color)
+                 .attr('font-size', B_font_size);
+        ///////////////////////////////////////////////////
+
+        ////////////// wide centered button ///////////////
+        var button_C3 = d3.select("#button_C3")
+                          .attr('x',      CB_x_pos)
+                          .attr('y',      CB_y_pos_B)
+                          .attr('width',  CB_width)
+                          .attr('height', CB_height)
+                          .on  ('click', function () {
+                                window.location.href = next_screen3;
+                          });
+        button_C3.append("rect")
+                 .attr('height', CB_height)
+                 .attr('width',  CB_width)
+                 .attr('fill', button_color);
+        button_C3.append("text")
+                 .attr('x', CB_width  / 2)
+                 .attr('y', CB_height / 2)
+                 .text(CB_text3)
                  .attr('text-anchor', 'middle')
                  .attr('alignment-baseline', 'central')
                  .attr('fill',      B_font_color)
